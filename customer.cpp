@@ -17,7 +17,7 @@ using namespace std;
 int main()
 {
 	vector<string>vec_service;
-	ifstream fip("servrip");
+	ifstream fip("serviceip");
 	string servip;
 	while(fip>>servip)
 	{
@@ -31,23 +31,30 @@ int main()
 	servaddr.sin_port = htons(SERV_PORT);
 	inet_pton(AF_INET,"10.0.2.15",&servaddr.sin_addr);
 	
+		for(int i = 0; i<vec_service.size(); i++)
+		{
+			if(0 != connect(vec_socketconnect[i],(sockaddr *)&servaddr,sizeof(servaddr)))
+			{
+				cout<<"the service : " << i<<"  failed"<<endl;
+			}
+		}				
 	while(true)
 	{
 		
 		string strcmd;
 		cin>>strcmd;
-		if(strcmd != "r" && strcmd != "k" && strcmd != "f" && strcmd != "s")
+		if(strcmd != "r" && strcmd != "k" && strcmd != "f")
 		{	
 			continue;
 		}
 		for(int i = 0; i<vec_service.size(); i++)
 		{
-			if(0 == connect(vec_socketconnect[i],(sockaddr *)&servaddr,sizeof(servaddr)))
-			{
-				send(vec_socketconnect[i],strcmd.c_str(),1,0);
-			}
-				
+			send(vec_socketconnect[i],strcmd.c_str(),1,0);
 		}
+	}
+	for(int i = 0; i<vec_service.size(); i++)
+	{
+		close(vec_socketconnect[i]);
 	}
 	return 0;
 }

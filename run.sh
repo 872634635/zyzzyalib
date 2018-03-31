@@ -1,20 +1,17 @@
 #!/bin/sh
 
-make clean
-make
+nu=`ps -A | awk '{if($4=="serverp") print $1}'`
+if [!$nu]
+then
+	echo "not exsit servicep process"
+else
+	echo "kill this process"
+	kill -9 $nu
+fi
 
-cd ../simple_zyzva
+cd ..
 
-make clean
-make
-
-./servicep
-
-cd ./gitzyva
-mv ../clientp ../servicep ./
-git add ./clientp ./servicep
-git commit -m 'temp'
-git push origin master
+./serverp
 
 
 

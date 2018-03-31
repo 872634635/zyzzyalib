@@ -51,6 +51,8 @@ int main()
 	{
 		close(customersock);
 		cout<<"this is a parent process"<<endl;
+		int status = 0;
+		int ret = wait(&status);
 	}
 	
 	return 0;
@@ -63,7 +65,11 @@ void handleMsg(int sock)
 	memset(szbuf,'\0',1024);
 	while(true)
 	{
-		recv(sock,szbuf,1,0);
+		if(0 == recv(sock,szbuf,1,0))
+		{
+			close(sock);
+			return 0;
+		}
 		switch(szbuf[0])
 		{
 			case 'r':
