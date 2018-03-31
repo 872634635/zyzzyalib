@@ -25,19 +25,19 @@ int main()
 		vec_service.push_back(servip);
 	}
 	vector<int>vec_socketconnect(vec_service.size(),socket(AF_INET,SOCK_STREAM,0));
-	struct sockaddr_in servaddr;
-	memset(&servaddr,'\0',sizeof(servaddr));
-	servaddr.sin_family = AF_INET;
-	servaddr.sin_port = htons(SERV_PORT);
-	inet_pton(AF_INET,"10.0.2.15",&servaddr.sin_addr);
-	
-		for(int i = 0; i<vec_service.size(); i++)
+	for(int i= 0; i<vec_service.size(); i++)
+	{
+		struct sockaddr_in servaddr;
+		memset(&servaddr,'\0',sizeof(servaddr));
+		servaddr.sin_family = AF_INET;
+		servaddr.sin_port = htons(SERV_PORT);
+		inet_pton(AF_INET,vec_service[i].c_str(),&servaddr.sin_addr);
+			
+		if(0 != connect(vec_socketconnect[i],(sockaddr *)&servaddr,sizeof(servaddr)))
 		{
-			if(0 != connect(vec_socketconnect[i],(sockaddr *)&servaddr,sizeof(servaddr)))
-			{
-				cout<<"the service : " << i<<"  failed"<<endl;
-			}
-		}				
+			cout<<"the service : " << i<<"  failed"<<endl;
+		}
+	}				
 	while(true)
 	{
 		

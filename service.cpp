@@ -75,17 +75,17 @@ void handleMsg(int sock)
 		{
 			case 'r':
 				cout<<"run"<<endl;
-				system("run.sh");
+				system("./run.sh");
 				// control the machine to run the zyzyvva's service process
 				break;
 			case 'k':
 				cout<<"kill"<<endl;
-				system("kill.sh");
+				system("./kill.sh");
 				// stop zyzyvva's service process
 				break;
 			case 'f':
 				cout<<"fetch"<<endl;
-				system("fetch.sh");
+				system("./fetch.sh");
 				// first, stop the zyzyvva's service process, and then, fetch update .h and .cc
 				break;
 			case 's':
