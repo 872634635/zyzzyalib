@@ -13,6 +13,7 @@ using namespace std;
 #include<vector>
 #include<fstream>
 #include<stdlib.h>
+#include<sys/wait.h>
  
 #define SERV_PORT 22223
 
@@ -68,7 +69,7 @@ void handleMsg(int sock)
 		if(0 == recv(sock,szbuf,1,0))
 		{
 			close(sock);
-			return 0;
+			return ;
 		}
 		switch(szbuf[0])
 		{
