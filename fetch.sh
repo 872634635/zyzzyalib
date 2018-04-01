@@ -12,6 +12,5 @@ fi
 git fetch orizya
 git checkout tool
 git merge orizya/tool
-cp ./servicep  ../
-cd ..
+cp ./serverp  ../
 

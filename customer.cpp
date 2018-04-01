@@ -24,7 +24,7 @@ int main()
 		cout<<servip<<endl;
 		vec_service.push_back(servip);
 	}
-	vector<int>vec_socketconnect(vec_service.size(),socket(AF_INET,SOCK_STREAM,0));
+	vector<int>vec_socketconnect(vec_service.size(),-1);
 	for(int i= 0; i<vec_service.size(); i++)
 	{
 		struct sockaddr_in servaddr;
@@ -32,7 +32,7 @@ int main()
 		servaddr.sin_family = AF_INET;
 		servaddr.sin_port = htons(SERV_PORT);
 		inet_pton(AF_INET,vec_service[i].c_str(),&servaddr.sin_addr);
-			
+		vec_socketconnect[i] = socket(AF_INET,SOCK_STREAM,0);
 		if(0 != connect(vec_socketconnect[i],(sockaddr *)&servaddr,sizeof(servaddr)))
 		{
 			cout<<"the service : " << i<<"  failed"<<endl;
@@ -43,10 +43,11 @@ int main()
 		
 		string strcmd;
 		cin>>strcmd;
-		if(strcmd != "r" && strcmd != "k" && strcmd != "f")
-		{	
+		if(strcmd != "r" && strcmd != "k" && strcmd != "f" && strcmd != "s")
+		{
 			continue;
 		}
+		cout<<"strcmd:  "<<strcmd<<endl;
 		for(int i = 0; i<vec_service.size(); i++)
 		{
 			send(vec_socketconnect[i],strcmd.c_str(),1,0);
