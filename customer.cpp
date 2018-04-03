@@ -1,4 +1,6 @@
 //this is a customer .cpp
+//which has push on a github
+
 #include<iostream>
 using namespace std;
 #include<string.h>
