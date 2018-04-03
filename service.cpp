@@ -61,6 +61,7 @@ int main()
 
 void* thread_run(void * arg)
 {
+	// should use thread or process, otherwise, the system function will stop the child process result in can not receive the msg from customer
 	cout<<"run"<<endl;
 	system("./run.sh");
 	return NULL;
